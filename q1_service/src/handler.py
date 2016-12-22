@@ -28,18 +28,15 @@ class WebHandler(object):
         """save a hash-message pair to database"""
         self.__ensure_table()
         sql = "INSERT INTO messages VALUES(?,?)"
-        print("saving data in __save_data()")
         self.db_conn.execute(sql, (hash, message))
 
     def get_data(self, hash_value):
         """get message from db, using key (hash string)"""
-        print("trying to get data by " + hash_value)
         self.__ensure_table()
         sql = "SELECT hash_str, msg_str FROM messages WHERE hash_str = ?"
         results = self.db_conn.execute(sql, (hash_value,))
 
         for row in results:
-            #print("---get data:" + str(row))
             return row[1]
         return None
 
